@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="cart">
+<!-- 마이바티스는 도메인타입에 따라 자동으로 resltType을 변환해준다. -->
+<!-- resultType은 패키지명과 클래스이름을 써야하지만,
+	mybatis-config.xml에 typeAlias를 지정해두면
+	지정한 별칭으로 사용 가능 -->
+	
+<!-- 상품별 장바구니 금액 통계 -->
+	<insert id="insert">
+		insert into cart(userid, product_id, amount)
+		values (#{userid}, #{product_id}, #{amount})
+	</insert>
+	
+	<select id="listCart" resultType="cartVO">
+		select cart_id, p.product_id, c.userid, username, product_name,
+		amount, price, (price*amount) total_price
+		from member m, cart c, product p
+		where m.userid=c.userid and c.product_id=p.product_id
+		and c.userid=#{userid}
+	</select>
+	
+	<select id="sumPrice" resultType="int">
+		select ifnull(sum(price*amount), 0) from cart c, product p
+		where c.product_id=p.product_id and userid=#{userid}
+	</select>
+	
+	<select id="sumTotal" resultType="int">
+		select ifnull(sum(price*amount), 0) from cart c, product p
+		where c.product_id=p.product_id and userid=#{userid} and cart_id = #{cart_id}
+	</select>
+	
+	<delete id="delete">
+		delete from cart where cart_id=#{cart_id}
+	</delete>
+	
+	<delete id="deleteAll">
+		delete from cart where userid=#{userid}
+	</delete>
+	
+	<update id="modify">
+		update cart set amount=#{amount} where cart_id=#{cart_id}
+	</update>
+	
+	<select id="read" resultType="cartVO">
+		select * from cart where cart_id=#{cart_id}
+	</select>
+</mapper>

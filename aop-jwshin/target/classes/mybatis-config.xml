@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+<configuration>
+  <typeAliases>
+        <typeAlias type="kpu.computer.jwshin.domain.member.MemberVO"
+        alias="memberVO" />
+        <typeAlias type="kpu.computer.jwshin.domain.shop.ProductVO"
+        alias="productVO" />
+        <typeAlias type="kpu.computer.jwshin.domain.shop.CartVO"
+        alias="cartVO" />
+        <typeAlias type="kpu.computer.jwshin.domain.payment.PaymentVO"
+        alias="paymentVO" />
+  </typeAliases>   
+</configuration>
